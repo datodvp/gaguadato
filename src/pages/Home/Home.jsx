@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as Styled from './Home.styled';
 import { getData } from '../../graphql/client';
 import { customProductsQuery } from '../../graphql/queries';
+import AddToBasket from '../../assets/icons/AddToBasket.svg';
 
 export default class Home extends Component {
   constructor(props) {
@@ -60,6 +61,9 @@ export default class Home extends Component {
           {this.state.products.map((product) => {
             return (
               <Styled.ProductContainer key={product.id}>
+                <Styled.AddToBasketIcon
+                  src={AddToBasket}
+                ></Styled.AddToBasketIcon>
                 <Styled.ImageContainer>
                   <Styled.Img src={product.gallery[0]}></Styled.Img>
                 </Styled.ImageContainer>

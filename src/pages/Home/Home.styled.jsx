@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import AddToBasket from '../../assets/icons/AddToBasket.svg';
 
 export const Container = styled.div`
   width: 100%;
@@ -28,10 +29,25 @@ export const ProductsWrapper = styled.div`
   margin-bottom: 80px;
 `;
 
+export const AddToBasketIcon = styled.img`
+  display: none;
+  position: absolute;
+  right: 31px;
+  top: 320px;
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
 export const ProductContainer = styled.div`
+  position: relative;
   height: 444px;
+  cursor: pointer;
   &:hover {
     box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+  }
+  &:hover ${AddToBasketIcon} {
+    display: inline;
   }
 `;
 
