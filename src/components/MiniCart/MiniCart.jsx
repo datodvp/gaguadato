@@ -4,13 +4,14 @@ import styled from 'styled-components';
 const Container = styled.div`
   display: flex;
   justify-content: flex-end;
+  /* overflow: hidden; */
 `;
 const Overlay = styled.div`
   position: absolute;
   width: 100%;
   left: 0;
   top: 80px;
-  height: 100%;
+  height: calc(100% - 80px);
   background: rgba(57, 55, 72, 0.22);
 `;
 

@@ -71,7 +71,11 @@ export default class App extends Component {
             />
             <Switch>
               <Route exact path='/'>
-                <Home />
+                <Home
+                  categories={this.state.categories}
+                  currentCategoryIndex={this.state.currentCategoryIndex}
+                  currentCurrencyIndex={this.state.currentCurrencyIndex}
+                />
               </Route>
               <Route path='/product/:id'>
                 <Product />

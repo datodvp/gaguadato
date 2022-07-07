@@ -11,15 +11,15 @@ export const Global = createGlobalStyle`
   }
 
   html {
-    position:relative;
+    /* position:relative;
     width:100%;
-    height:100%;
+    height:100%; */
   }
 
   body {
     position:absolute;
     min-width:100%;
-    height:100%;
+    min-height:100%;
   }
 
   #root{

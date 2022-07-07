@@ -59,12 +59,12 @@ const CurrencySymbol = styled.div`
 const Arrow = styled.img`
   width: 6px;
   height: 3px;
-  margin-right: 22px;
   margin-top: 4px;
 `;
 const MiniCartLogoContainer = styled.div`
   display: flex;
   align-items: center;
+  margin-left: 22px;
   cursor: pointer;
 `;
 const MiniCartLogo = styled.img``;
