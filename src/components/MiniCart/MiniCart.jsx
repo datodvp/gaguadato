@@ -28,7 +28,7 @@ export default class MiniCart extends Component {
   render() {
     return (
       <Container>
-        <Overlay onClick={this.props.miniCartClick}></Overlay>
+        <Overlay onClick={this.props.miniCartToggle}></Overlay>
         <MiniCartWrapper>MiniCart</MiniCartWrapper>
       </Container>
     );

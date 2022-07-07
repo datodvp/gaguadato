@@ -8,19 +8,51 @@ const Container = styled.div`
 
 const CurrencyWrapper = styled.div`
   position: absolute;
-  /* background-color: red; */
-  height: 100px;
-  /* margin-right: 105px;
-  margin-top: -15px; */
+  height: fit-content;
   margin-top: 40px;
+  margin-right: -20px;
   box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
 `;
 
+const SingleCurrency = styled.div`
+  width: 100px;
+  height: 45px;
+  font-size: 18px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(238, 238, 238, 1);
+  }
+`;
+
 export default class Currency extends Component {
+  changeCurrentCurrencyIndex = (currencyIndex) => {
+    this.props.changeCurrentCurrencyIndex(currencyIndex);
+    this.props.currencyToggle();
+  };
+
   render() {
     return (
       <Container>
-        <CurrencyWrapper>Currency</CurrencyWrapper>
+        <CurrencyWrapper>
+          {this.props.currencies.map((item, currencyIndex) => {
+            return (
+              <SingleCurrency
+                key={currencyIndex}
+                onClick={() => {
+                  this.changeCurrentCurrencyIndex(currencyIndex);
+                }}
+              >
+                {item.symbol}
+                {item.label}
+              </SingleCurrency>
+            );
+          })}
+        </CurrencyWrapper>
       </Container>
     );
   }

@@ -29,10 +29,10 @@ export default class OutsideAlerter extends Component {
   handleClickOutside(event) {
     if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
       if (this.props.currencyOpen) {
-        this.props.currencyClick();
+        this.props.currencyToggle();
       }
       if (this.props.miniCartOpen) {
-        this.props.miniCartClick();
+        this.props.miniCartToggle();
       }
     }
   }

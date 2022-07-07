@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import * as Styled from './App.styled';
 import { getData } from './graphql/client';
-import { categoriesQuery } from './graphql/queries';
+import { categoriesQuery, currenciesQuery } from './graphql/queries';
 import Navbar from './components/Navbar/Navbar';
 import Home from './pages/Home/Home';
 import Product from './pages/Product/Product';
@@ -16,24 +16,42 @@ export default class App extends Component {
       categories: [],
       currentCategoryIndex: 0,
       currencies: [],
+      currentCurrencyIndex: 0,
     };
   }
 
   componentDidMount() {
     this.getCategories();
+    this.getCurrencies();
   }
 
-  getCategories = async () => {
-    let categoriesData = await getData(categoriesQuery);
+  getCurrencies = async () => {
+    let currenciesData = await getData(currenciesQuery);
+    let { currencies } = currenciesData;
 
     this.setState({
-      categories: categoriesData.categories,
+      currencies: currencies,
     });
   };
 
-  changeCurrentCategoryIndex = (index) => {
+  changeCurrentCurrencyIndex = (currencyIndex) => {
     this.setState({
-      currentCategoryIndex: index,
+      currentCurrencyIndex: currencyIndex,
+    });
+  };
+
+  getCategories = async () => {
+    let categoriesData = await getData(categoriesQuery);
+    let { categories } = categoriesData;
+
+    this.setState({
+      categories: categories,
+    });
+  };
+
+  changeCurrentCategoryIndex = (CategoryIndex) => {
+    this.setState({
+      currentCategoryIndex: CategoryIndex,
     });
   };
 
@@ -47,6 +65,9 @@ export default class App extends Component {
               categories={this.state.categories}
               currentCategoryIndex={this.state.currentCategoryIndex}
               changeCurrentCategoryIndex={this.changeCurrentCategoryIndex}
+              currencies={this.state.currencies}
+              currentCurrencyIndex={this.state.currentCurrencyIndex}
+              changeCurrentCurrencyIndex={this.changeCurrentCurrencyIndex}
             />
             <Switch>
               <Route exact path='/'>

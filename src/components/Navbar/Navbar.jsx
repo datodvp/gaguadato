@@ -79,14 +79,14 @@ export default class Navbar extends Component {
     };
   }
 
-  miniCartClick = () => {
+  miniCartToggle = () => {
     // open and close minicart and its overlay
     this.setState({
       miniCartOpen: !this.state.miniCartOpen,
     });
   };
 
-  currencyClick = () => {
+  currencyToggle = () => {
     // open and clsoe currency and its overlay
     this.setState({
       currencyOpen: !this.state.currencyOpen,
@@ -98,6 +98,13 @@ export default class Navbar extends Component {
   };
 
   render() {
+    if (
+      this.props.categories.length === 0 ||
+      this.props.currencies.length === 0
+    ) {
+      return <h1>Loading Data...</h1>;
+    }
+
     return (
       <>
         <Container>
@@ -123,25 +130,38 @@ export default class Navbar extends Component {
           <Right>
             <OutsideAlerter
               currencyOpen={this.state.currencyOpen}
-              currencyClick={this.currencyClick}
+              currencyToggle={this.currencyToggle}
             >
-              <CurrencyContainer onClick={this.currencyClick}>
-                <CurrencySymbol>$</CurrencySymbol>
+              <CurrencyContainer onClick={this.currencyToggle}>
+                <CurrencySymbol>
+                  {
+                    this.props.currencies[this.props.currentCurrencyIndex]
+                      .symbol
+                  }
+                </CurrencySymbol>
                 <Arrow
                   src={this.state.currencyOpen ? UpArrow : DownArrow}
                 ></Arrow>
               </CurrencyContainer>
-              {this.state.currencyOpen && <Currency></Currency>}
+              {this.state.currencyOpen && (
+                <Currency
+                  currencies={this.props.currencies}
+                  changeCurrentCurrencyIndex={
+                    this.props.changeCurrentCurrencyIndex
+                  }
+                  currencyToggle={this.currencyToggle}
+                ></Currency>
+              )}
             </OutsideAlerter>
             <OutsideAlerter
               miniCartOpen={this.state.miniCartOpen}
-              miniCartClick={this.miniCartClick}
+              miniCartToggle={this.miniCartToggle}
             >
-              <MiniCartLogoContainer onClick={this.miniCartClick}>
+              <MiniCartLogoContainer onClick={this.miniCartToggle}>
                 <MiniCartLogo src={MiniCartIcon}></MiniCartLogo>
               </MiniCartLogoContainer>
               {this.state.miniCartOpen && (
-                <MiniCart miniCartClick={this.miniCartClick}></MiniCart>
+                <MiniCart miniCartToggle={this.miniCartToggle}></MiniCart>
               )}
             </OutsideAlerter>
           </Right>
