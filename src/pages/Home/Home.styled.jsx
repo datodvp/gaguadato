@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import AddToBasket from '../../assets/icons/AddToBasket.svg';
 
 export const Container = styled.div`
   width: 100%;
