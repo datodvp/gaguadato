@@ -32,6 +32,8 @@ const SingleCurrency = styled.div`
 export default class Currency extends Component {
   changeCurrentCurrencyIndex = (currencyIndex) => {
     this.props.changeCurrentCurrencyIndex(currencyIndex);
+
+    // close the currency popup
     this.props.currencyToggle();
   };
 
