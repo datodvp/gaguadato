@@ -108,6 +108,7 @@ export default class Navbar extends Component {
     return (
       <>
         <Container>
+          {/* left side of navigation bar  */}
           <Left>
             {this.props.categories.map((item, categoryIndex) => {
               return (
@@ -124,10 +125,13 @@ export default class Navbar extends Component {
               );
             })}
           </Left>
+          {/* center of navigation bar */}
           <Center>
             <LogoImg src={Logo}></LogoImg>
           </Center>
+          {/* right side of navigation bar */}
           <Right>
+            {/* this component gets outside click of itself and its childs */}
             <OutsideAlerter
               currencyOpen={this.state.currencyOpen}
               currencyToggle={this.currencyToggle}
