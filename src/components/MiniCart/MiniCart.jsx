@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const Container = styled.div`
   display: flex;
   justify-content: flex-end;
+  z-index: 1;
   /* overflow: hidden; */
 `;
 const Overlay = styled.div`
