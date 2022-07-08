@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import OutsideAlerter from '../OutsideAlerter/OutsideAlerter';
 import Logo from '../../assets/icons/Logo.svg';
 import DownArrow from '../../assets/icons/DownArrow.svg';
@@ -69,6 +70,11 @@ const MiniCartLogoContainer = styled.div`
 `;
 const MiniCartLogo = styled.img``;
 
+const LinkStyled = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+`;
+
 export default class Navbar extends Component {
   constructor(props) {
     super(props);
@@ -112,16 +118,17 @@ export default class Navbar extends Component {
           <Left>
             {this.props.categories.map((item, categoryIndex) => {
               return (
-                <Category
-                  key={categoryIndex}
-                  id={categoryIndex}
-                  currentCategoryIndex={this.props.currentCategoryIndex}
-                  onClick={() => {
-                    this.changeCurrentCategoryIndex(categoryIndex);
-                  }}
-                >
-                  {item.name}
-                </Category>
+                <LinkStyled to='/' key={categoryIndex}>
+                  <Category
+                    id={categoryIndex}
+                    currentCategoryIndex={this.props.currentCategoryIndex}
+                    onClick={() => {
+                      this.changeCurrentCategoryIndex(categoryIndex);
+                    }}
+                  >
+                    {item.name}
+                  </Category>
+                </LinkStyled>
               );
             })}
           </Left>

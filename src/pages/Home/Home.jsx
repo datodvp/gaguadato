@@ -13,7 +13,9 @@ export default class Home extends Component {
       currentCategory: '',
     };
   }
-  componentDidMount() {}
+  componentDidMount() {
+    this.getCategoryName();
+  }
 
   componentDidUpdate() {
     this.getCategoryName();
@@ -61,23 +63,25 @@ export default class Home extends Component {
           {this.state.products.map((product) => {
             return (
               <Styled.ProductContainer key={product.id}>
-                <Styled.AddToBasketIcon
-                  src={AddToBasket}
-                ></Styled.AddToBasketIcon>
-                <Styled.ImageContainer>
-                  <Styled.Img src={product.gallery[0]}></Styled.Img>
-                </Styled.ImageContainer>
-                <Styled.AttributesContainer>
-                  <Styled.Brand>{product.brand}</Styled.Brand>{' '}
-                  <Styled.Name>{product.name}</Styled.Name>
-                  <Styled.Price>
-                    {
-                      product.prices[this.props.currentCurrencyIndex].currency
-                        .symbol
-                    }
-                    {product.prices[this.props.currentCurrencyIndex].amount}
-                  </Styled.Price>
-                </Styled.AttributesContainer>
+                <Styled.LinkStyled to={`product/${product.id}`}>
+                  <Styled.AddToBasketIcon
+                    src={AddToBasket}
+                  ></Styled.AddToBasketIcon>
+                  <Styled.ImageContainer>
+                    <Styled.Img src={product.gallery[0]}></Styled.Img>
+                  </Styled.ImageContainer>
+                  <Styled.AttributesContainer>
+                    <Styled.Brand>{product.brand}</Styled.Brand>{' '}
+                    <Styled.Name>{product.name}</Styled.Name>
+                    <Styled.Price>
+                      {
+                        product.prices[this.props.currentCurrencyIndex].currency
+                          .symbol
+                      }
+                      {product.prices[this.props.currentCurrencyIndex].amount}
+                    </Styled.Price>
+                  </Styled.AttributesContainer>
+                </Styled.LinkStyled>
               </Styled.ProductContainer>
             );
           })}

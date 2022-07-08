@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
   width: 100%;
@@ -82,4 +83,9 @@ export const Name = styled.div`
 export const Price = styled.div`
   font-size: 18px;
   font-weight: 500;
+`;
+
+export const LinkStyled = styled(Link)`
+  text-decoration: none;
+  color: inherit;
 `;
