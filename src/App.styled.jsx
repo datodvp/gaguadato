@@ -6,8 +6,6 @@ export const Global = createGlobalStyle`
   * {
     margin:0px;
     box-sizing:border-box;
-    font-size:16px;
-    font-weight:600;
   }
 
   html {

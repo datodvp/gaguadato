@@ -28,6 +28,7 @@ const Category = styled.div`
   padding-right: 16px;
   padding-top: 28px;
   padding-bottom: 32px;
+  font-weight: 600;
   border-bottom: ${(props) =>
     props.id === props.currentCategoryIndex && '2px solid #5ece7b;'};
   color: ${(props) => props.id === props.currentCategoryIndex && '#5ece7b'};
