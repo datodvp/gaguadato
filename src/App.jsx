@@ -17,6 +17,7 @@ export default class App extends Component {
       currentCategoryIndex: 0,
       currencies: [],
       currentCurrencyIndex: 0,
+      productsInBasket: [],
     };
   }
 
@@ -55,6 +56,41 @@ export default class App extends Component {
     });
   };
 
+  addProductInBasket = (newProduct) => {
+    //check if same exact product exists and if it does stack it on previous product else add it as new item
+
+    // let item = this.
+    // clone productsInBasket state to change it
+
+    const clonedProductsInBasket = structuredClone(this.state.productsInBasket);
+
+    let dataChanged = false;
+
+    clonedProductsInBasket.every((productInBasket) => {
+      // if product attributes and product id are same then change product data and set it on state
+      if (
+        productInBasket.productData.id === newProduct.productData.id &&
+        JSON.stringify(productInBasket.chosenAttributes) ===
+          JSON.stringify(newProduct.chosenAttributes)
+      ) {
+        productInBasket.amount += 1;
+        this.setState({
+          productsInBasket: clonedProductsInBasket,
+        });
+        console.log('shemovida');
+        dataChanged = true;
+        return false;
+      }
+      return true;
+    });
+    // if product is different from other products after checking in basket then add it as new product
+    if (dataChanged === false) {
+      this.setState({
+        productsInBasket: [...this.state.productsInBasket, newProduct],
+      });
+    }
+  };
+
   render() {
     return (
       <>
@@ -78,7 +114,11 @@ export default class App extends Component {
                 />
               </Route>
               <Route path='/product/:id'>
-                <Product />
+                <Product
+                  productsInBasket={this.state.productsInBasket}
+                  addProductInBasket={this.addProductInBasket}
+                  currentCurrencyIndex={this.state.currentCurrencyIndex}
+                />
               </Route>
               <Route path='/cart'>
                 <Cart />

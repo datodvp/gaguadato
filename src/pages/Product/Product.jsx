@@ -12,6 +12,7 @@ class Product extends Component {
     this.productId = props.match.params.id;
     this.state = {
       productData: {},
+      currentAttributes: [],
       mainImage: '',
     };
 
@@ -34,14 +35,57 @@ class Product extends Component {
         this.setMainImage(
           this.state.productData.gallery[this.defaultMainImageIndex]
         );
+        // set default attributes for product on this page
+        this.setDefaultAttributesValues();
       }
     );
+  };
+
+  setDefaultAttributesValues = () => {
+    let copiedProductData = structuredClone(this.state.productData);
+
+    let productAttributes = copiedProductData.attributes.map((attribute) => {
+      return {
+        attributeId: attribute.id,
+        itemId: attribute.items[0].id,
+      };
+    });
+    this.setState({
+      currentAttributes: productAttributes,
+    });
+  };
+
+  setCustomAttribute = (attributeId, itemId) => {
+    // clone current attributes to change its value inside and then set as state
+
+    let clonedCurrentAttributes = structuredClone(this.state.currentAttributes);
+
+    let attributeIndex = clonedCurrentAttributes.findIndex(
+      (obj) => obj.attributeId === attributeId
+    );
+
+    clonedCurrentAttributes[attributeIndex].itemId = itemId;
+
+    this.setState({
+      currentAttributes: clonedCurrentAttributes,
+    });
   };
 
   setMainImage = (image) => {
     this.setState({
       mainImage: image,
     });
+  };
+
+  addProductInBasket = () => {
+    // check if product exists in basket.
+    let productForBasket = {
+      chosenAttributes: this.state.currentAttributes,
+      amount: 1,
+      productData: this.state.productData,
+    };
+
+    this.props.addProductInBasket(productForBasket);
   };
 
   render() {
@@ -82,7 +126,19 @@ class Product extends Component {
                   <Styled.AttributeBoxesContainer>
                     {attribute.items.map((item) => {
                       return (
-                        <Styled.AttributeTextBox key={item.id}>
+                        <Styled.AttributeTextBox
+                          key={item.id}
+                          itemId={item.id}
+                          attributeId={attribute.id}
+                          currentAttributes={this.state.currentAttributes.find(
+                            (obj) =>
+                              obj.itemId === item.id &&
+                              obj.attributeId === attribute.id
+                          )}
+                          onClick={() => {
+                            this.setCustomAttribute(attribute.id, item.id);
+                          }}
+                        >
                           {item.displayValue}
                         </Styled.AttributeTextBox>
                       );
@@ -100,7 +156,19 @@ class Product extends Component {
                         <Styled.AttributeColorBox
                           key={item.id}
                           color={item.value}
-                        ></Styled.AttributeColorBox>
+                          onClick={() => {
+                            this.setCustomAttribute(attribute.id, item.id);
+                          }}
+                        >
+                          <Styled.AttributeColorBoxAfter
+                            id={item.id}
+                            currentAttributes={this.state.currentAttributes.find(
+                              (obj) =>
+                                obj.itemId === item.id &&
+                                obj.attributeId === attribute.id
+                            )}
+                          ></Styled.AttributeColorBoxAfter>
+                        </Styled.AttributeColorBox>
                       );
                     })}
                   </Styled.AttributeBoxesContainer>
@@ -109,8 +177,19 @@ class Product extends Component {
             }
           })}
           <Styled.Price>PRICE:</Styled.Price>
-          <Styled.PriceValue>$50</Styled.PriceValue>
-          <Styled.AddToCartButton>Add To Cart</Styled.AddToCartButton>
+          <Styled.PriceValue>
+            {
+              this.state.productData.prices[this.props.currentCurrencyIndex]
+                .currency.symbol
+            }
+            {
+              this.state.productData.prices[this.props.currentCurrencyIndex]
+                .amount
+            }
+          </Styled.PriceValue>
+          <Styled.AddToCartButton onClick={this.addProductInBasket}>
+            Add To Cart
+          </Styled.AddToCartButton>
           <Styled.Description>
             {parse(this.state.productData.description)}
           </Styled.Description>

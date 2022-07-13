@@ -85,6 +85,24 @@ export const AttributeTextBox = styled.div`
   justify-content: center;
   align-items: center;
   margin-right: 12px;
+  background-color: ${(props) => {
+    if (props.currentAttributes) {
+      if (props.currentAttributes.itemId === props.itemId) {
+        return 'black';
+      }
+    } else {
+      return '';
+    }
+  }};
+  color: ${(props) => {
+    if (props.currentAttributes) {
+      if (props.currentAttributes.itemId === props.itemId) {
+        return 'white';
+      }
+    } else {
+      return '';
+    }
+  }};
   cursor: pointer;
 `;
 
@@ -93,7 +111,28 @@ export const AttributeColorBox = styled.div`
   height: 32px;
   background-color: ${(props) => props.color};
   margin-right: 8px;
+  position: relative;
   cursor: pointer;
+`;
+
+export const AttributeColorBoxAfter = styled.div`
+  &:after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: ${(props) => {
+      if (props.currentAttributes) {
+        if (props.currentAttributes.itemId === props.id) {
+          return 'rgba(94, 206, 123, 1) 2px solid';
+        }
+      } else {
+        return '';
+      }
+    }};
+  }
 `;
 
 export const Price = styled.div`
