@@ -15,7 +15,21 @@ export const customProductsQuery = (category) => {
         .addField('name')
         .addField('inStock')
         .addField('gallery')
+        .addField('description')
+        .addField('category')
         .addField('brand')
+        .addField(
+          new Field('attributes', true)
+            .addField('id')
+            .addField('name')
+            .addField('type')
+            .addField(
+              new Field('items', true)
+                .addField('id')
+                .addField('displayValue')
+                .addField('value')
+            )
+        )
         .addField(
           new Field('prices', true)
             .addField('amount')

@@ -48,6 +48,47 @@ export default class Home extends Component {
     });
   };
 
+  setDefaultAttributesValues = () => {
+    let copiedProductData = structuredClone(this.state.productData);
+
+    let productAttributes = copiedProductData.attributes.map((attribute) => {
+      return {
+        attributeId: attribute.id,
+        itemId: attribute.items[0].id,
+      };
+    });
+    this.setState({
+      currentAttributes: productAttributes,
+    });
+  };
+
+  addProductInBasket = (chosenProductId) => {
+    // firstly, set default attributes for product
+
+    // clone productsData from state
+    let productsList = structuredClone(this.state.products);
+
+    let productData = productsList.find(
+      (product) => product.id === chosenProductId
+    );
+    // create attributes object
+
+    let productAttributes = productData.attributes.map((attribute) => {
+      return {
+        attributeId: attribute.id,
+        itemId: attribute.items[0].id,
+      };
+    });
+    // create product object for basket
+    let productForBasket = {
+      chosenAttributes: productAttributes,
+      amount: 1,
+      productData: productData,
+    };
+
+    this.props.addProductInBasket(productForBasket);
+  };
+
   render() {
     if (
       this.props.categories.length === 0 ||
@@ -63,10 +104,13 @@ export default class Home extends Component {
           {this.state.products.map((product) => {
             return (
               <Styled.ProductContainer key={product.id}>
+                <Styled.AddToBasketIcon
+                  src={AddToBasket}
+                  onClick={() => {
+                    this.addProductInBasket(product.id);
+                  }}
+                ></Styled.AddToBasketIcon>
                 <Styled.LinkStyled to={`product/${product.id}`}>
-                  <Styled.AddToBasketIcon
-                    src={AddToBasket}
-                  ></Styled.AddToBasketIcon>
                   <Styled.ImageContainer>
                     <Styled.Img src={product.gallery[0]}></Styled.Img>
                   </Styled.ImageContainer>

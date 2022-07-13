@@ -78,7 +78,7 @@ class Product extends Component {
   };
 
   addProductInBasket = () => {
-    // check if product exists in basket.
+    // create object for product in basket
     let productForBasket = {
       chosenAttributes: this.state.currentAttributes,
       amount: 1,

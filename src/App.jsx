@@ -77,7 +77,6 @@ export default class App extends Component {
         this.setState({
           productsInBasket: clonedProductsInBasket,
         });
-        console.log('shemovida');
         dataChanged = true;
         return false;
       }
@@ -111,6 +110,7 @@ export default class App extends Component {
                   categories={this.state.categories}
                   currentCategoryIndex={this.state.currentCategoryIndex}
                   currentCurrencyIndex={this.state.currentCurrencyIndex}
+                  addProductInBasket={this.addProductInBasket}
                 />
               </Route>
               <Route path='/product/:id'>
