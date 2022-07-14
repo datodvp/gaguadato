@@ -17,7 +17,8 @@ export default class App extends Component {
       currentCategoryIndex: 0,
       currencies: [],
       currentCurrencyIndex: 0,
-      productsInBasket: [],
+      productsInBasket:
+        JSON.parse(localStorage.getItem('productsInBasket')) || [],
     };
   }
 
@@ -74,9 +75,18 @@ export default class App extends Component {
           JSON.stringify(newProduct.chosenAttributes)
       ) {
         productInBasket.amount += 1;
-        this.setState({
-          productsInBasket: clonedProductsInBasket,
-        });
+        this.setState(
+          {
+            productsInBasket: clonedProductsInBasket,
+          },
+          () => {
+            //save data in local storage
+            localStorage.setItem(
+              'productsInBasket',
+              JSON.stringify(this.state.productsInBasket)
+            );
+          }
+        );
         dataChanged = true;
         return false;
       }
@@ -84,9 +94,18 @@ export default class App extends Component {
     });
     // if product is different from other products after checking in basket then add it as new product
     if (dataChanged === false) {
-      this.setState({
-        productsInBasket: [...this.state.productsInBasket, newProduct],
-      });
+      this.setState(
+        {
+          productsInBasket: [...this.state.productsInBasket, newProduct],
+        },
+        () => {
+          // save data in local storage
+          localStorage.setItem(
+            'productsInBasket',
+            JSON.stringify(this.state.productsInBasket)
+          );
+        }
+      );
     }
   };
 
@@ -121,7 +140,10 @@ export default class App extends Component {
                 />
               </Route>
               <Route path='/cart'>
-                <Cart />
+                <Cart
+                  productsInBasket={this.state.productsInBasket}
+                  currentCurrencyIndex={this.state.currentCurrencyIndex}
+                />
               </Route>
             </Switch>
           </Router>

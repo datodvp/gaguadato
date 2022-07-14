@@ -20,7 +20,8 @@ export const DesignLine = styled.div`
   height: 1px;
   left: 100px;
   top: 255px;
-
+  margin-top: 24px;
+  margin-bottom: 24px;
   background: #e5e5e5;
 `;
 
@@ -49,7 +50,7 @@ export const ProductName = styled.div`
   margin-bottom: 20px;
 `;
 
-export const ProcutPrice = styled.div`
+export const ProductPrice = styled.div`
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 20px;
@@ -77,17 +78,21 @@ export const AttributeTextBox = styled.div`
   justify-content: center;
   align-items: center;
   margin-right: 8px;
+  cursor: pointer;
 `;
 
 export const AttributeColorBox = styled.div`
   width: 32px;
   height: 32px;
-  background-color: teal;
+  background-color: ${(props) => props.color};
   margin-right: 8px;
+  cursor: pointer;
 `;
 
 export const Right = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const AmountChangerContainer = styled.div`
@@ -95,6 +100,7 @@ export const AmountChangerContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 288px;
 `;
 
 export const PlusButton = styled.div`
@@ -106,7 +112,6 @@ export const PlusButton = styled.div`
   text-align: center;
   border: 1px solid rgba(29, 31, 34, 1);
   overflow: hidden;
-  margin-top: 24px;
   cursor: pointer;
 `;
 
@@ -119,7 +124,6 @@ export const MinusButton = styled.div`
   text-align: center;
   border: 1px solid rgba(29, 31, 34, 1);
   overflow: hidden;
-  margin-bottom: 24px;
   cursor: pointer;
 `;
 
@@ -132,10 +136,16 @@ export const AmountNumber = styled.div`
 export const PhotoContainer = styled.div`
   width: 200px;
   height: 288px;
-  background-color: lightgreen;
   margin: auto;
   margin-left: 24px;
   position: relative;
+  display: flex;
+  align-items: center;
+`;
+
+export const Photo = styled.img`
+  max-width: 100%;
+  max-height: 100%;
 `;
 
 export const SwappersContainer = styled.div`
