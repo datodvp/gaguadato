@@ -57,6 +57,21 @@ export default class App extends Component {
     });
   };
 
+  removeProductFromBasket = (newProductsData) => {
+    this.setState(
+      {
+        productsInBasket: newProductsData,
+      },
+      () => {
+        //save data in local storage
+        localStorage.setItem(
+          'productsInBasket',
+          JSON.stringify(this.state.productsInBasket)
+        );
+      }
+    );
+  };
+
   addProductInBasket = (newProduct) => {
     //check if same exact product exists and if it does stack it on previous product else add it as new item
 
@@ -112,8 +127,6 @@ export default class App extends Component {
   changeItemAmount = (parameter, product) => {
     const clonedProductsInBasket = structuredClone(this.state.productsInBasket);
 
-    let dataChanged = false;
-
     clonedProductsInBasket.every((productInBasket, index) => {
       // if product attributes and product id are same then change product data and set it on state
       if (
@@ -142,12 +155,17 @@ export default class App extends Component {
             );
           }
         );
-        dataChanged = true;
         return false;
       }
       return true;
     });
     console.log(clonedProductsInBasket);
+  };
+
+  changeAttribute = (newProductsInBasket) => {
+    this.setState({
+      productsInBasket: newProductsInBasket,
+    });
   };
 
   render() {
@@ -185,6 +203,8 @@ export default class App extends Component {
                   productsInBasket={this.state.productsInBasket}
                   currentCurrencyIndex={this.state.currentCurrencyIndex}
                   changeItemAmount={this.changeItemAmount}
+                  removeProductFromBasket={this.removeProductFromBasket}
+                  changeAttribute={this.changeAttribute}
                 />
               </Route>
             </Switch>

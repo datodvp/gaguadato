@@ -92,16 +92,73 @@ export default class Cart extends Component {
     this.props.changeItemAmount(parameter, product);
   };
 
+  changeAttribute = (product, attributeId, newItemId, productIndex) => {
+    let itemsDidStack = this.checkItemStacking(
+      product,
+      attributeId,
+      newItemId,
+      productIndex
+    );
+
+    if (itemsDidStack === false) {
+      let clonedProductsInBasket = structuredClone(this.props.productsInBasket);
+      clonedProductsInBasket.forEach((item) => {
+        if (
+          JSON.stringify(item.chosenAttributes) ===
+            JSON.stringify(product.chosenAttributes) &&
+          item.productData.id === product.productData.id
+        ) {
+          item.chosenAttributes = item.chosenAttributes.map((attr) => {
+            attr.attributeId = attributeId;
+            attr.itemId = newItemId;
+            return attr;
+          });
+        }
+      });
+      this.props.changeAttribute(clonedProductsInBasket);
+    }
+  };
+
+  checkItemStacking = (product, attributeId, newItemId, productIndex) => {
+    let itemsDidStack = false;
+    let clonedProductsInBasket = structuredClone(this.props.productsInBasket);
+    let clonedProduct = structuredClone(product);
+    clonedProduct.chosenAttributes.forEach((attr, attrIndex) => {
+      if (attr.attributeId === attributeId && attr.itemId !== newItemId) {
+        clonedProduct.chosenAttributes[attrIndex].itemId = newItemId;
+
+        // check if same product with same attributes exists in basket and if it does add it to previous item
+        clonedProductsInBasket.forEach((item) => {
+          if (
+            JSON.stringify(item.chosenAttributes) ===
+              JSON.stringify(clonedProduct.chosenAttributes) &&
+            item.productData.id === clonedProduct.productData.id
+          ) {
+            item.amount += clonedProduct.amount;
+            clonedProductsInBasket.splice(productIndex, 1);
+            itemsDidStack = true;
+          }
+        });
+      }
+    });
+
+    this.props.removeProductFromBasket(clonedProductsInBasket);
+
+    return itemsDidStack;
+  };
+
   render() {
     return (
       <Styled.Container>
         <Styled.PageName>cart</Styled.PageName>
         <Styled.ProductsWrapper>
           <Styled.DesignLine></Styled.DesignLine>
-          {this.props.productsInBasket.map((product) => {
+          {this.props.productsInBasket.map((product, productIndex) => {
             let { productData } = product;
             return (
-              <div key={productData.id}>
+              <div
+                key={productData.id + JSON.stringify(product.chosenAttributes)}
+              >
                 <Styled.ProductContainer>
                   <Styled.Left>
                     <Styled.ProductBrand>
@@ -128,7 +185,23 @@ export default class Cart extends Component {
                             <Styled.AttributeBoxesContainer>
                               {attr.items.map((item) => {
                                 return (
-                                  <Styled.AttributeTextBox key={item.id}>
+                                  <Styled.AttributeTextBox
+                                    key={item.id}
+                                    itemId={item.id}
+                                    currentAttributes={product.chosenAttributes.find(
+                                      (obj) =>
+                                        obj.attributeId === attr.id &&
+                                        obj.itemId === item.id
+                                    )}
+                                    onClick={() => {
+                                      this.changeAttribute(
+                                        product,
+                                        attr.id,
+                                        item.id,
+                                        productIndex
+                                      );
+                                    }}
+                                  >
                                     {item.displayValue}
                                   </Styled.AttributeTextBox>
                                 );
@@ -148,7 +221,16 @@ export default class Cart extends Component {
                                   <Styled.AttributeColorBox
                                     key={item.id}
                                     color={item.value}
-                                  ></Styled.AttributeColorBox>
+                                  >
+                                    <Styled.AttributeColorBoxAfter
+                                      id={item.id}
+                                      currentAttributes={product.chosenAttributes.find(
+                                        (obj) =>
+                                          obj.attributeId === attr.id &&
+                                          obj.itemId === item.id
+                                      )}
+                                    ></Styled.AttributeColorBoxAfter>
+                                  </Styled.AttributeColorBox>
                                 );
                               })}
                             </Styled.AttributeBoxesContainer>
