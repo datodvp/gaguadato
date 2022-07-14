@@ -148,6 +148,47 @@ export default class Cart extends Component {
     return itemsDidStack;
   };
 
+  calculateTax = () => {
+    let totalPrice = 0;
+    let amountOfItem = 0;
+    this.props.productsInBasket.forEach((product) => {
+      amountOfItem += product.amount;
+      totalPrice +=
+        product.productData.prices[this.props.currentCurrencyIndex].amount;
+    });
+    totalPrice *= amountOfItem;
+    let tax = (totalPrice * 21) / 100;
+    let currencySymbol =
+      this.props.productsInBasket[0].productData.prices[
+        this.props.currentCurrencyIndex
+      ].currency.symbol;
+    return currencySymbol + tax.toFixed(2);
+  };
+
+  calculateQuantity = () => {
+    let amountOfItem = 0;
+    this.props.productsInBasket.forEach((product) => {
+      amountOfItem += product.amount;
+    });
+    return amountOfItem;
+  };
+
+  calculateTotalPrice = () => {
+    let totalPrice = 0;
+    let amountOfItem = 0;
+    this.props.productsInBasket.forEach((product) => {
+      amountOfItem += product.amount;
+      totalPrice +=
+        product.productData.prices[this.props.currentCurrencyIndex].amount;
+    });
+    totalPrice *= amountOfItem;
+    let currencySymbol =
+      this.props.productsInBasket[0].productData.prices[
+        this.props.currentCurrencyIndex
+      ].currency.symbol;
+    return currencySymbol + totalPrice.toFixed(2);
+  };
+
   render() {
     return (
       <Styled.Container>
@@ -300,6 +341,18 @@ export default class Cart extends Component {
             );
           })}
         </Styled.ProductsWrapper>
+        <Styled.SumContainer>
+          <Styled.InfoBox>
+            Tax 21%: <span>{this.calculateTax()}</span>
+          </Styled.InfoBox>
+          <Styled.InfoBox>
+            Quantity: <span>{this.calculateQuantity()}</span>
+          </Styled.InfoBox>
+          <Styled.InfoBox>
+            Total: <span>{this.calculateTotalPrice()}</span>
+          </Styled.InfoBox>
+          <Styled.BuyButtom>ORDER</Styled.BuyButtom>
+        </Styled.SumContainer>
       </Styled.Container>
     );
   }

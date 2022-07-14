@@ -179,3 +179,32 @@ export const RightSwapIcon = styled.img`
   margin-right: 16px;
   cursor: pointer;
 `;
+
+export const SumContainer = styled.div`
+  margin-bottom: 100px;
+`;
+
+export const InfoBox = styled.div`
+  font-size: 24px;
+  font-weight: 400;
+  span {
+    font-weight: 700;
+  }
+`;
+
+export const BuyButtom = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 32px;
+
+  width: 279px;
+  height: 43px;
+  color: white;
+  margin-top: 20px;
+
+  /* --c-primary */
+  cursor: pointer;
+  background: #5ece7b;
+`;
