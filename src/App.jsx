@@ -159,7 +159,6 @@ export default class App extends Component {
       }
       return true;
     });
-    console.log(clonedProductsInBasket);
   };
 
   changeAttribute = (newProductsInBasket) => {

@@ -110,7 +110,6 @@ export default class Cart extends Component {
         ) {
           item.chosenAttributes = item.chosenAttributes.map((attr) => {
             if (attr.attributeId === attributeId && attr.itemId !== newItemId) {
-              console.log(attr);
               attr.itemId = newItemId;
             }
             return attr;
