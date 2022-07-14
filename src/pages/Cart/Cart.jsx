@@ -88,6 +88,10 @@ export default class Cart extends Component {
     });
   };
 
+  changeItemAmount = (parameter, product) => {
+    this.props.changeItemAmount(parameter, product);
+  };
+
   render() {
     return (
       <Styled.Container>
@@ -155,11 +159,23 @@ export default class Cart extends Component {
                   </Styled.Left>
                   <Styled.Right>
                     <Styled.AmountChangerContainer>
-                      <Styled.PlusButton>+</Styled.PlusButton>
+                      <Styled.PlusButton
+                        onClick={() => {
+                          this.changeItemAmount('add', product);
+                        }}
+                      >
+                        +
+                      </Styled.PlusButton>
                       <Styled.AmountNumber>
                         {product.amount}
                       </Styled.AmountNumber>
-                      <Styled.MinusButton>-</Styled.MinusButton>
+                      <Styled.MinusButton
+                        onClick={() => {
+                          this.changeItemAmount('substract', product);
+                        }}
+                      >
+                        -
+                      </Styled.MinusButton>
                     </Styled.AmountChangerContainer>
                     <Styled.PhotoContainer>
                       <Styled.Photo

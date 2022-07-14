@@ -109,6 +109,47 @@ export default class App extends Component {
     }
   };
 
+  changeItemAmount = (parameter, product) => {
+    const clonedProductsInBasket = structuredClone(this.state.productsInBasket);
+
+    let dataChanged = false;
+
+    clonedProductsInBasket.every((productInBasket, index) => {
+      // if product attributes and product id are same then change product data and set it on state
+      if (
+        productInBasket.productData.id === product.productData.id &&
+        JSON.stringify(productInBasket.chosenAttributes) ===
+          JSON.stringify(product.chosenAttributes)
+      ) {
+        if (parameter === 'add') {
+          productInBasket.amount += 1;
+        } else if (parameter === 'substract') {
+          if (productInBasket.amount === 1) {
+            clonedProductsInBasket.splice(index, 1);
+          }
+          productInBasket.amount -= 1;
+        }
+
+        this.setState(
+          {
+            productsInBasket: clonedProductsInBasket,
+          },
+          () => {
+            //save data in local storage
+            localStorage.setItem(
+              'productsInBasket',
+              JSON.stringify(this.state.productsInBasket)
+            );
+          }
+        );
+        dataChanged = true;
+        return false;
+      }
+      return true;
+    });
+    console.log(clonedProductsInBasket);
+  };
+
   render() {
     return (
       <>
@@ -143,6 +184,7 @@ export default class App extends Component {
                 <Cart
                   productsInBasket={this.state.productsInBasket}
                   currentCurrencyIndex={this.state.currentCurrencyIndex}
+                  changeItemAmount={this.changeItemAmount}
                 />
               </Route>
             </Switch>
