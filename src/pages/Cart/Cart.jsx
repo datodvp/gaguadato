@@ -109,8 +109,10 @@ export default class Cart extends Component {
           item.productData.id === product.productData.id
         ) {
           item.chosenAttributes = item.chosenAttributes.map((attr) => {
-            attr.attributeId = attributeId;
-            attr.itemId = newItemId;
+            if (attr.attributeId === attributeId && attr.itemId !== newItemId) {
+              console.log(attr);
+              attr.itemId = newItemId;
+            }
             return attr;
           });
         }
@@ -229,6 +231,14 @@ export default class Cart extends Component {
                                           obj.attributeId === attr.id &&
                                           obj.itemId === item.id
                                       )}
+                                      onClick={() => {
+                                        this.changeAttribute(
+                                          product,
+                                          attr.id,
+                                          item.id,
+                                          productIndex
+                                        );
+                                      }}
                                     ></Styled.AttributeColorBoxAfter>
                                   </Styled.AttributeColorBox>
                                 );
