@@ -37,6 +37,7 @@ export const AddToBasketIcon = styled.img`
   &:hover {
     transform: scale(1.1);
   }
+  z-index: 1;
 `;
 
 export const ProductContainer = styled.div`
@@ -58,6 +59,7 @@ export const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 `;
 
 export const Img = styled.img`
@@ -88,4 +90,18 @@ export const Price = styled.div`
 export const LinkStyled = styled(Link)`
   text-decoration: none;
   color: inherit;
+`;
+
+export const OutOfStock = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  opacity: 0.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: 400;
+  color: rgba(141, 143, 154, 1);
 `;

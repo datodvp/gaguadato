@@ -104,15 +104,20 @@ export default class Home extends Component {
           {this.state.products.map((product) => {
             return (
               <Styled.ProductContainer key={product.id}>
-                <Styled.AddToBasketIcon
-                  src={AddToBasket}
-                  onClick={() => {
-                    this.addProductInBasket(product.id);
-                  }}
-                ></Styled.AddToBasketIcon>
+                {product.inStock && (
+                  <Styled.AddToBasketIcon
+                    src={AddToBasket}
+                    onClick={() => {
+                      this.addProductInBasket(product.id);
+                    }}
+                  ></Styled.AddToBasketIcon>
+                )}
                 <Styled.LinkStyled to={`product/${product.id}`}>
                   <Styled.ImageContainer>
                     <Styled.Img src={product.gallery[0]}></Styled.Img>
+                    {!product.inStock && (
+                      <Styled.OutOfStock>OUT OF STOCK</Styled.OutOfStock>
+                    )}
                   </Styled.ImageContainer>
                   <Styled.AttributesContainer>
                     <Styled.Brand>{product.brand}</Styled.Brand>{' '}

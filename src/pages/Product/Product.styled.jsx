@@ -41,6 +41,7 @@ export const MainImgContainer = styled.div`
   justify-content: center;
   margin-left: 40px;
   margin-right: 102px;
+  position: relative;
 `;
 
 export const MainImg = styled.img`
@@ -170,4 +171,18 @@ export const Description = styled.div`
   margin-top: 40px;
   font-weight: 400;
   font-size: 16px;
+`;
+
+export const OutOfStock = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  opacity: 0.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: 400;
+  color: rgba(141, 143, 154, 1);
 `;

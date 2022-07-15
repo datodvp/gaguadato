@@ -79,6 +79,10 @@ class Product extends Component {
 
   addProductInBasket = () => {
     // create object for product in basket
+    if (!this.state.productData.inStock) {
+      alert('item is out of stock!');
+      return;
+    }
     let productForBasket = {
       chosenAttributes: this.state.currentAttributes,
       amount: 1,
@@ -111,6 +115,9 @@ class Product extends Component {
           </Styled.MiniImagesContainer>
           <Styled.MainImgContainer>
             <Styled.MainImg src={this.state.mainImage}></Styled.MainImg>
+            {!this.state.productData.inStock && (
+              <Styled.OutOfStock>OUT OF STOCK</Styled.OutOfStock>
+            )}
           </Styled.MainImgContainer>
         </Styled.ImagesContainer>
         <Styled.AttributesContainer>
