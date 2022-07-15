@@ -21,6 +21,7 @@ export default class Cart extends Component {
             id: product.productData.id,
             chosenAttributes: product.chosenAttributes,
             currentIndexOfPhoto: 0,
+            uuid: product.uuid,
             photosList: product.productData.gallery.map((photo) => {
               return photo;
             }),
@@ -40,8 +41,7 @@ export default class Cart extends Component {
     clonedphotosListOfProducts.every((photoInfo) => {
       if (
         photoInfo.id === product.productData.id &&
-        JSON.stringify(photoInfo.chosenAttributes) ===
-          JSON.stringify(product.chosenAttributes)
+        photoInfo.uuid === product.uuid
       ) {
         returnValue = photoInfo.currentIndexOfPhoto;
         return false;
@@ -61,8 +61,7 @@ export default class Cart extends Component {
     clonedphotosListOfProducts.every((photoInfo) => {
       if (
         photoInfo.id === product.productData.id &&
-        JSON.stringify(photoInfo.chosenAttributes) ===
-          JSON.stringify(product.chosenAttributes)
+        photoInfo.uuid === product.uuid
       ) {
         if (parameter === 'right') {
           if (photoInfo.photosList.length - 1 > photoInfo.currentIndexOfPhoto) {
@@ -186,6 +185,19 @@ export default class Cart extends Component {
   };
 
   render() {
+    if (this.props.productsInBasket.length === 0) {
+      return (
+        <Styled.Container>
+          <Styled.PageName>
+            Cart
+            <Styled.DesignLine></Styled.DesignLine>
+            <Styled.ProductsWrapper>
+              <h1>Cart is empty!</h1>
+            </Styled.ProductsWrapper>
+          </Styled.PageName>
+        </Styled.Container>
+      );
+    }
     return (
       <Styled.Container>
         <Styled.PageName>cart</Styled.PageName>

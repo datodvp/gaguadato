@@ -84,6 +84,7 @@ export default class Home extends Component {
       chosenAttributes: productAttributes,
       amount: 1,
       productData: productData,
+      uuid: crypto.randomUUID(),
     };
 
     this.props.addProductInBasket(productForBasket);

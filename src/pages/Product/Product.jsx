@@ -87,6 +87,7 @@ class Product extends Component {
       chosenAttributes: this.state.currentAttributes,
       amount: 1,
       productData: this.state.productData,
+      uuid: crypto.randomUUID(),
     };
 
     this.props.addProductInBasket(productForBasket);
