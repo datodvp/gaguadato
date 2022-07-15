@@ -150,13 +150,11 @@ export default class Cart extends Component {
 
   calculateTax = () => {
     let totalPrice = 0;
-    let amountOfItem = 0;
     this.props.productsInBasket.forEach((product) => {
-      amountOfItem += product.amount;
       totalPrice +=
-        product.productData.prices[this.props.currentCurrencyIndex].amount;
+        product.productData.prices[this.props.currentCurrencyIndex].amount *
+        product.amount;
     });
-    totalPrice *= amountOfItem;
     let tax = (totalPrice * 21) / 100;
     let currencySymbol =
       this.props.productsInBasket[0].productData.prices[
@@ -175,13 +173,11 @@ export default class Cart extends Component {
 
   calculateTotalPrice = () => {
     let totalPrice = 0;
-    let amountOfItem = 0;
     this.props.productsInBasket.forEach((product) => {
-      amountOfItem += product.amount;
       totalPrice +=
-        product.productData.prices[this.props.currentCurrencyIndex].amount;
+        product.productData.prices[this.props.currentCurrencyIndex].amount *
+        product.amount;
     });
-    totalPrice *= amountOfItem;
     let currencySymbol =
       this.props.productsInBasket[0].productData.prices[
         this.props.currentCurrencyIndex
