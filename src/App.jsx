@@ -16,7 +16,7 @@ export default class App extends Component {
       categories: [],
       currentCategoryIndex: 0,
       currencies: [],
-      currentCurrencyIndex: 0,
+      currentCurrencyIndex: localStorage.getItem('currentCurrencyIndex') || 0,
       productsInBasket:
         JSON.parse(localStorage.getItem('productsInBasket')) || [],
     };
@@ -37,9 +37,18 @@ export default class App extends Component {
   };
 
   changeCurrentCurrencyIndex = (currencyIndex) => {
-    this.setState({
-      currentCurrencyIndex: currencyIndex,
-    });
+    this.setState(
+      {
+        currentCurrencyIndex: currencyIndex,
+      },
+      () => {
+        // save currency in local storage
+        localStorage.setItem(
+          'currentCurrencyIndex',
+          this.state.currentCurrencyIndex
+        );
+      }
+    );
   };
 
   getCategories = async () => {
