@@ -189,6 +189,8 @@ export default class App extends Component {
               currencies={this.state.currencies}
               currentCurrencyIndex={this.state.currentCurrencyIndex}
               changeCurrentCurrencyIndex={this.changeCurrentCurrencyIndex}
+              productsInBasket={this.state.productsInBasket}
+              changeItemAmount={this.changeItemAmount}
             />
             <Switch>
               <Route exact path='/'>

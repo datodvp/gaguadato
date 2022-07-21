@@ -122,8 +122,8 @@ export const AmountChangerContainer = styled.div`
 export const PlusButton = styled.div`
   width: 45px;
   height: 45px;
-  font-size: 60px;
-  font-weight: 100;
+  font-size: 45px;
+  font-weight: 0;
   line-height: 45px;
   text-align: center;
   border: 1px solid rgba(29, 31, 34, 1);
@@ -134,8 +134,8 @@ export const PlusButton = styled.div`
 export const MinusButton = styled.div`
   width: 45px;
   height: 45px;
-  font-size: 60px;
-  font-weight: 100;
+  font-size: 45px;
+  font-weight: 0;
   line-height: 36px;
   text-align: center;
   border: 1px solid rgba(29, 31, 34, 1);

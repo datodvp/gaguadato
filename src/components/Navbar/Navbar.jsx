@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import OutsideAlerter from '../OutsideAlerter/OutsideAlerter';
 import Logo from '../../assets/icons/Logo.svg';
 import DownArrow from '../../assets/icons/DownArrow.svg';
@@ -8,73 +6,7 @@ import UpArrow from '../../assets/icons/UpArrow.svg';
 import MiniCartIcon from '../../assets/icons/MiniCart.svg';
 import MiniCart from '../MiniCart/MiniCart';
 import Currency from '../Currency/Currency';
-
-const Container = styled.div`
-  /* position: relative; */
-  height: 80px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const Left = styled.div`
-  margin-left: 100px;
-  display: flex;
-`;
-
-const Category = styled.div`
-  text-transform: uppercase;
-  padding-left: 16px;
-  padding-right: 16px;
-  padding-top: 28px;
-  padding-bottom: 32px;
-  font-weight: 600;
-  border-bottom: ${(props) =>
-    props.id === props.currentCategoryIndex && '2px solid #5ece7b;'};
-  color: ${(props) => props.id === props.currentCategoryIndex && '#5ece7b'};
-  cursor: pointer;
-`;
-
-const Center = styled.div`
-  position: absolute;
-  left: 50%;
-`;
-
-const LogoImg = styled.img``;
-
-const Right = styled.div`
-  margin-right: 100px;
-  display: flex;
-`;
-
-const CurrencyContainer = styled.div`
-  display: flex;
-  align-items: center;
-  position: relative;
-  cursor: pointer;
-`;
-const CurrencySymbol = styled.div`
-  font-size: 18px;
-  line-height: 28.8px;
-  margin-right: 10px;
-`;
-const Arrow = styled.img`
-  width: 6px;
-  height: 3px;
-  margin-top: 4px;
-`;
-const MiniCartLogoContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: 22px;
-  cursor: pointer;
-`;
-const MiniCartLogo = styled.img``;
-
-const LinkStyled = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-`;
+import * as Styled from './Navbar.styled';
 
 export default class Navbar extends Component {
   constructor(props) {
@@ -104,6 +36,15 @@ export default class Navbar extends Component {
     this.props.changeCurrentCategoryIndex(categoryIndex);
   };
 
+  calculateQuantity = () => {
+    let quantity = 0;
+    Array.from(this.props.productsInBasket).forEach((item) => {
+      quantity += item.amount;
+    });
+
+    return quantity;
+  };
+
   render() {
     if (
       this.props.categories.length === 0 ||
@@ -114,13 +55,13 @@ export default class Navbar extends Component {
 
     return (
       <>
-        <Container>
+        <Styled.Container>
           {/* left side of navigation bar  */}
-          <Left>
+          <Styled.Left>
             {this.props.categories.map((item, categoryIndex) => {
               return (
-                <LinkStyled to='/' key={categoryIndex}>
-                  <Category
+                <Styled.LinkStyled to='/' key={categoryIndex}>
+                  <Styled.Category
                     id={categoryIndex}
                     currentCategoryIndex={this.props.currentCategoryIndex}
                     onClick={() => {
@@ -128,33 +69,33 @@ export default class Navbar extends Component {
                     }}
                   >
                     {item.name}
-                  </Category>
-                </LinkStyled>
+                  </Styled.Category>
+                </Styled.LinkStyled>
               );
             })}
-          </Left>
+          </Styled.Left>
           {/* center of navigation bar */}
-          <Center>
-            <LogoImg src={Logo}></LogoImg>
-          </Center>
+          <Styled.Center>
+            <Styled.LogoImg src={Logo}></Styled.LogoImg>
+          </Styled.Center>
           {/* right side of navigation bar */}
-          <Right>
+          <Styled.Right>
             {/* this component gets outside click of itself and its childs */}
             <OutsideAlerter
               currencyOpen={this.state.currencyOpen}
               currencyToggle={this.currencyToggle}
             >
-              <CurrencyContainer onClick={this.currencyToggle}>
-                <CurrencySymbol>
+              <Styled.CurrencyContainer onClick={this.currencyToggle}>
+                <Styled.CurrencySymbol>
                   {
                     this.props.currencies[this.props.currentCurrencyIndex]
                       .symbol
                   }
-                </CurrencySymbol>
-                <Arrow
+                </Styled.CurrencySymbol>
+                <Styled.Arrow
                   src={this.state.currencyOpen ? UpArrow : DownArrow}
-                ></Arrow>
-              </CurrencyContainer>
+                ></Styled.Arrow>
+              </Styled.CurrencyContainer>
               {this.state.currencyOpen && (
                 <Currency
                   currencies={this.props.currencies}
@@ -165,19 +106,30 @@ export default class Navbar extends Component {
                 ></Currency>
               )}
             </OutsideAlerter>
+
             <OutsideAlerter
               miniCartOpen={this.state.miniCartOpen}
               miniCartToggle={this.miniCartToggle}
             >
-              <MiniCartLogoContainer onClick={this.miniCartToggle}>
-                <MiniCartLogo src={MiniCartIcon}></MiniCartLogo>
-              </MiniCartLogoContainer>
+              <Styled.MiniCartLogoContainer onClick={this.miniCartToggle}>
+                <Styled.MiniCartLogo src={MiniCartIcon}></Styled.MiniCartLogo>
+                {this.props.productsInBasket.length !== 0 && (
+                  <Styled.CartCircle>
+                    {this.calculateQuantity()}
+                  </Styled.CartCircle>
+                )}
+              </Styled.MiniCartLogoContainer>
               {this.state.miniCartOpen && (
-                <MiniCart miniCartToggle={this.miniCartToggle}></MiniCart>
+                <MiniCart
+                  miniCartToggle={this.miniCartToggle}
+                  productsInBasket={this.props.productsInBasket}
+                  currentCurrencyIndex={this.props.currentCurrencyIndex}
+                  changeItemAmount={this.props.changeItemAmount}
+                ></MiniCart>
               )}
             </OutsideAlerter>
-          </Right>
-        </Container>
+          </Styled.Right>
+        </Styled.Container>
       </>
     );
   }
