@@ -15,6 +15,9 @@ export default class MiniCart extends Component {
   };
 
   calculateTotalPrice = () => {
+    if (this.props.productsInBasket.length === 0) {
+      return;
+    }
     let totalPrice = 0;
     this.props.productsInBasket.forEach((product) => {
       totalPrice +=
